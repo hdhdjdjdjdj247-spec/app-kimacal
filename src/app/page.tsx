@@ -22,7 +22,7 @@ export default function Home() {
   if (!mounted) {
     return (
       <div className="flex items-center justify-center h-screen bg-white">
-        <div className="text-center">
+        <div className="text-center animate-fade-in">
           <div className="w-16 h-16 border-4 border-[#39FF14] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600 font-inter">Carregando Kimacal...</p>
         </div>
@@ -33,18 +33,18 @@ export default function Home() {
   return (
     <div className="flex flex-col h-screen bg-white">
       {/* Header */}
-      <header className="bg-white border-b border-gray-100 px-4 py-4 sm:px-6">
+      <header className="bg-white border-b border-gray-100 px-4 py-4 sm:px-6 animate-slide-in-up">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#39FF14] to-[#2ecc00] rounded-xl flex items-center justify-center shadow-lg shadow-[#39FF14]/20">
+            <div className="w-10 h-10 bg-gradient-to-br from-[#39FF14] to-[#2ecc00] rounded-xl flex items-center justify-center shadow-lg shadow-[#39FF14]/20 hover-glow">
               <span className="text-white font-bold text-xl">K</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+            <h1 className="text-2xl font-bold text-gray-900 tracking-tight gradient-text">
               Kimacal
             </h1>
           </div>
           <div className="flex items-center gap-2">
-            <div className="hidden sm:flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-full">
+            <div className="hidden sm:flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-full transition-smooth hover:bg-gray-100">
               <div className="w-2 h-2 bg-[#39FF14] rounded-full animate-pulse"></div>
               <span className="text-sm text-gray-600 font-medium">Online</span>
             </div>
@@ -54,16 +54,18 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto">
-        {currentView === 'camera' && <CameraView />}
-        {currentView === 'dashboard' && <Dashboard />}
-        {currentView === 'history' && <HistoryView />}
-        {currentView === 'profile' && <ProfileView />}
-        {currentView === 'badges' && <BadgesView />}
-        {currentView === 'community' && <CommunityView />}
+        <div className="animate-fade-in">
+          {currentView === 'camera' && <CameraView />}
+          {currentView === 'dashboard' && <Dashboard />}
+          {currentView === 'history' && <HistoryView />}
+          {currentView === 'profile' && <ProfileView />}
+          {currentView === 'badges' && <BadgesView />}
+          {currentView === 'community' && <CommunityView />}
+        </div>
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="bg-white border-t border-gray-100 px-4 py-3 sm:py-4">
+      <nav className="bg-white border-t border-gray-100 px-4 py-3 sm:py-4 glass-effect">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-6 gap-1 sm:gap-2">
             <NavButton
@@ -123,14 +125,17 @@ function NavButton({
   return (
     <button
       onClick={onClick}
-      className={`flex flex-col items-center justify-center gap-1 py-2 px-1 rounded-xl transition-all duration-300 ${
+      className={`flex flex-col items-center justify-center gap-1 py-2 px-1 rounded-xl transition-bounce relative overflow-hidden ${
         active 
           ? 'bg-[#39FF14]/10 text-[#39FF14]' 
           : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'
       }`}
     >
-      <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${active ? 'scale-110' : ''} transition-transform duration-300`} />
-      <span className={`text-[10px] sm:text-xs font-medium ${active ? 'font-semibold' : ''}`}>
+      {active && (
+        <div className="absolute inset-0 animate-shimmer"></div>
+      )}
+      <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${active ? 'scale-110' : ''} transition-transform duration-300 relative z-10`} />
+      <span className={`text-[10px] sm:text-xs font-medium ${active ? 'font-semibold' : ''} relative z-10`}>
         {label}
       </span>
     </button>
